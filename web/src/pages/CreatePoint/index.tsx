@@ -2,6 +2,7 @@ import React, {useEffect, useState, ChangeEvent, FormEvent} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {Map, TileLayer, Marker } from 'react-leaflet'
 import { LeafletMouseEvent } from 'leaflet'
+import Dropzone from './../../components/Dropzone';
 
 import './styles.css';
 import logo from './../../assets/logo.svg';
@@ -12,9 +13,9 @@ import apiUfs from './../../services/apiUfs';
 import axios from 'axios';
 
 interface Item{
-     ID: number,
+     id: number,
      name: string,
-     imageUrl: string,
+     image_url: string,
 }
 
 interface States{
@@ -144,6 +145,9 @@ const CreatePoint = () => {
                     <h1>
                          Cadastro do<br/> ponto de coleta
                     </h1>
+
+                    <Dropzone/>
+
                     <fieldset>
                          <legend>
                               <h2>Dados</h2>
@@ -210,8 +214,8 @@ const CreatePoint = () => {
                          <ul className="items-grid">
                               {items.map(item => {
                                    return(
-                                        <li key={item.ID} onClick={() => handleSelectItem(item.ID)} className={selectedItems.includes(item.ID) ? 'selected' : ''}>
-                                             <img src={item.imageUrl} alt={item.name}/>
+                                        <li key={item.id} onClick={() => handleSelectItem(item.id)} className={selectedItems.includes(item.id) ? 'selected' : ''}>
+                                             <img src={item.image_url} alt={item.name}/>
                                              <span>{item.name}</span>
                                         </li>
                                    )
