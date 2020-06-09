@@ -42,6 +42,7 @@ const CreatePoint = () => {
           email: '',
           whatsapp: '',
      });
+     const [selectedFile, setSelectedFile] = useState<File>();
 
      const history = useHistory();
 
@@ -79,21 +80,26 @@ const CreatePoint = () => {
 
      async function handleSubmit(event: FormEvent){
           event.preventDefault();
+
           const { name, email, whatsapp } = formData;
           const uf = selectedUf;
           const city = selectedCity;
           const [latitude, longitude] = selectedMapClick;
           const items = selectedItems;
 
-          const data = {
-               name,
-               city,
-               uf,
-               email,
-               whatsapp,
-               latitude,
-               longitude,
-               items,
+          const data = new FormData();
+          
+     
+          data.append("name",name);
+          data.append("city",city);
+          data.append("uf",uf);
+          data.append("email",email);
+          data.append("whatsapp",whatsapp);
+          data.append("latitude",String(latitude));
+          data.append("longitude",String(longitude));
+          data.append("items",items.join(","));
+          if(selectedFile){
+               data.append("image", selectedFile);
           }
 
           console.log(data);
@@ -146,7 +152,7 @@ const CreatePoint = () => {
                          Cadastro do<br/> ponto de coleta
                     </h1>
 
-                    <Dropzone/>
+                    <Dropzone onFileUploaded={setSelectedFile}/>
 
                     <fieldset>
                          <legend>
